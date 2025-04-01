@@ -1,0 +1,97 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+
+const roadmap = [
+  {
+    week: "Week 1-2",
+    title: "Linux & Networking Foundations",
+    tasks: [
+      "User & group management",
+      "Process management",
+      "Filesystem navigation & permissions",
+      "Bash scripting for automation",
+      "Networking basics (IP, SSH, firewall)"
+    ],
+    lab: [
+      "Secure SSH access to your VM",
+      "Write a Bash script that monitors failed SSH login attempts"
+    ]
+  },
+  {
+    week: "Week 3-4",
+    title: "Web Security & Programming",
+    tasks: [
+      "HTML, CSS, JavaScript fundamentals",
+      "Flask/Django for web development",
+      "Common vulnerabilities: SQLi, XSS, CSRF",
+      "Set up OWASP Juice Shop and exploit vulnerabilities"
+    ],
+    lab: [
+      "Deploy a Flask/Django website in your VM",
+      "Perform SQL injection & XSS attacks on Juice Shop"
+    ]
+  },
+  {
+    week: "Week 5-6",
+    title: "Network Security & Attack Simulations",
+    tasks: [
+      "Use tcpdump and Wireshark",
+      "Set up a VPN server",
+      "Penetration testing basics: Metasploit, Nmap, Hydra",
+      "Reconnaissance on a test network"
+    ],
+    lab: [
+      "Capture & analyze network traffic",
+      "Exploit vulnerabilities in Metasploitable VM"
+    ]
+  }
+];
+
+export default function CyberSecurityRoadmap() {
+  const [currentWeek, setCurrentWeek] = useState(0);
+
+  return (
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Cybersecurity Roadmap</h1>
+      <motion.div
+        key={roadmap[currentWeek].week}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="p-4 mb-4">
+          <CardContent>
+            <h2 className="text-2xl font-semibold">{roadmap[currentWeek].week}: {roadmap[currentWeek].title}</h2>
+            <ul className="list-disc ml-6 mt-2">
+              {roadmap[currentWeek].tasks.map((task, index) => (
+                <li key={index}>{task}</li>
+              ))}
+            </ul>
+            <h3 className="text-xl font-medium mt-4">Hands-on Lab:</h3>
+            <ul className="list-disc ml-6 mt-2">
+              {roadmap[currentWeek].lab.map((lab, index) => (
+                <li key={index}>{lab}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </motion.div>
+      <div className="flex justify-between mt-4">
+        <Button
+          disabled={currentWeek === 0}
+          onClick={() => setCurrentWeek(currentWeek - 1)}
+        >
+          Previous
+        </Button>
+        <Button
+          disabled={currentWeek === roadmap.length - 1}
+          onClick={() => setCurrentWeek(currentWeek + 1)}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+}
