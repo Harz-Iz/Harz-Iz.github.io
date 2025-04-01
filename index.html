@@ -6,41 +6,86 @@
     <title>Cybersecurity Roadmap</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 20px auto;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
+            background: #f5f7fa;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
             text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
         }
         .card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
         }
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            background: #007bff;
+            background: #3498db;
             color: white;
             cursor: pointer;
-            margin: 5px;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
         }
         button:disabled {
-            background: #ccc;
+            background: #bdc3c7;
             cursor: not-allowed;
+            transform: none;
+        }
+        .week-progress {
+            text-align: center;
+            margin: 15px 0;
+            color: #7f8c8d;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
     <h1>Cybersecurity Roadmap</h1>
+    <div class="week-progress">Week <span id="current-week">1</span> of <span id="total-weeks">3</span></div>
     <div id="roadmap-content" class="card"></div>
-
-    <button id="prev" onclick="changeWeek(-1)" disabled>Previous</button>
-    <button id="next" onclick="changeWeek(1)">Next</button>
+    <div class="button-group">
+        <button id="prev" onclick="changeWeek(-1)" disabled>← Previous</button>
+        <button id="next" onclick="changeWeek(1)">Next →</button>
+    </div>
 
     <script>
         const roadmap = [
@@ -95,6 +140,8 @@
             const content = document.getElementById("roadmap-content");
             const prevBtn = document.getElementById("prev");
             const nextBtn = document.getElementById("next");
+            const currentWeekEl = document.getElementById("current-week");
+            const totalWeeksEl = document.getElementById("total-weeks");
 
             const week = roadmap[currentWeek];
             content.innerHTML = `
@@ -107,6 +154,8 @@
 
             prevBtn.disabled = currentWeek === 0;
             nextBtn.disabled = currentWeek === roadmap.length - 1;
+            currentWeekEl.textContent = currentWeek + 1;
+            totalWeeksEl.textContent = roadmap.length;
         }
 
         function changeWeek(direction) {
@@ -114,9 +163,8 @@
             updateRoadmap();
         }
 
-        // Load initial content
+        // Initialize
         updateRoadmap();
     </script>
-
 </body>
 </html>
